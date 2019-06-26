@@ -1,7 +1,7 @@
 ###Kinetics: Intro to R Plotting and Regression###
 #Zane Billings#
 #MATH 340 Spring 2019#
-setwd("/Users/zanebillings/Documents/Spring 2019/Sci Comp")
+setwd("/Users/zanebillings/Documents/Academic/2019 Spring/Sci Comp")
 
 ###Part 1: A simple Lineweaver-Burke Plot
 #the data frame "ex" will contain a very basic data fit that was
@@ -20,10 +20,9 @@ plot(ex)
 ex.model <- lm(formula = I(1/V)~I(1/S),
                data = ex)
 
-lb.ex <- data.frame(
-  s.recip <- 1/ex$S,
-  v.recip <- 1/ex$V
-)
+lb.ex <- data.frame(1/ex$S,1/ex$V)
+colnames(lb.ex) <- c("s.recip","v.recip")
+plot(lb.ex)
 
 model <- lm(
   formula = v.recip~s.recip,
@@ -32,26 +31,32 @@ model <- lm(
 
 summary(model)
 
-#print a summary of the linear model.
-summary(ex.model)
 #let's generate the LB plot and see how it looks.
-plot(x = 1/ex$S,
-     y = 1/ex$V,
+plot(x = lb.ex$s.recip,
+     y = lb.ex$v.recip,
      main = "Lineweaver-Burke Plot",
      xlab = "1/[S]",
      ylab = "1/V")
-abline(ex.model,lty=2) #this adds the line to the plot
+abline(model,lty=2) #this adds the line to the plot
 #Now, we can use the model to calculate Km and Vmax.
-cfs <- coef(ex.model) #we will need the coefficients.
+cfs <- coef(model) #we will need the coefficients.
 #both of the below formulae can be obtained by easy algebra.
 vmax <- as.numeric(1/cfs[1])
 km <- as.numeric((1/cfs[1])*cfs[2])
 vmax;km #print the values.
 
+cfs <- coef(model); cfs
+vmax <- as.numeric(1/cfs[1])
+km <- as.numeric((1/cfs[1])*cfs[2])
+vmax;km
+printvmax = paste("vmax is ",round(vmax,2)," uM")
+printkm = paste("Km is ",round(km,2)," uM*s^(-1)")
+printvmax;printkm
+
 #Let's plot the model. Generate a vector of the predicted y-values, then plot.
 vhat <- (vmax*ex$S)/(km+ex$S)
-plot(ex,main = "Lineweaver-Burke Example") + lines(x = ex$S, y = vhat,lty=2)
-
+plot(ex,main = "Untransformed Model Example") +
+  lines(x = ex$S, y = vhat,lty=2)
 
 ###Part 2: Importing the second (more realistic) data set
 #Import the data from the provided csv file
