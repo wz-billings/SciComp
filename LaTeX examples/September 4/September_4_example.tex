@@ -1,0 +1,40 @@
+\documentclass{article}
+
+\usepackage{url} % Since we included a \url{} in our BibTeX file, we need to have the url package here.
+
+% Today in class we covered: how to make a bibliography
+
+\title{MATH340\_Day7}
+\author{Zane and Dr. McNelis}
+\date{4 September, 2019}
+
+\begin{document}
+% How to include something in your bibliography without an in-text citation
+\nocite{*} % the * means all, or you can specifiy nicknames.
+
+\maketitle
+
+\section{Bibliographies}
+% You will need to make a second file in the same project to get a bibliography. The bibliography will be inside of a .bib file (short for BibTeX). 
+
+% The \cite{} command references something from your bibliography, adds an in-text reference, and automatically adds the citation to your bibliography wherever you put it.
+
+This sentence needs to have a citation~\cite{fakebook}. % The tilde makes a "sticky space" that can't go away during formatting. It is optional.
+
+RNA inference is a fun way to figure stuff out in genetics. These people used it to look at the \textit{C. elegans} genome \cite{kamath2003systematic}.
+
+% How to insert your bibliography into this document:
+\bibliographystyle{siam} % There are a lot of styles, you can find one online for most styles of citations.
+\bibliography{example} % Note that you do not need to add the .bib file extension here because the compiler knows to look for a .bib file.
+
+% If you are NOT on overleaf (e.g. using a distribution on your machine), you need to compile four times: LaTeX, BibTex, LaTeX, LaTeX. Overleaf does all this in the background for you.
+
+\end{document}
+
+% An example citation:
+% @type_of_course{nickname,
+% field_one = {},
+% field_two = {},
+% etc. = {} }
+
+% We got this citation from google scholar!

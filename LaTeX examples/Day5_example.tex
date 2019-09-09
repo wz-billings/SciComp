@@ -1,0 +1,101 @@
+\documentclass{article}
+
+% Packages used in this example
+\usepackage{amsmath} % Recall, needed for align*
+
+% Title meta-days
+\title{MATH340 Day5}
+\author{Hoops and Dr. McNelis}
+\date{2019-08-28}
+
+% Pro-Tip: any form of display math mode is automatically centered on the page! E.g. $$ $$, \[ \], align/align*, and equation.
+
+\begin{document}
+
+\maketitle
+
+\section{Stretching Delimiters}
+% How to make your delimiter characters (), [], {}, ||, etc., be the correct size. See documentation (e.g. CTAN, Overleaf, Wikibooks) for complete list of usable symbols. 
+
+\begin{align*} % Bad example with ugly parentheses
+    (x+1) ( \frac{x-3}{x^2-4x-5} ) &= \frac{(x+1)(x-3)}{(x+1)(x-5)} \\
+    &= \frac{x-3}{x-5}
+\end{align*}
+
+\begin{align*} % Good example with nice parentheses
+    (x+1) \left( \frac{x-3}{x^2-4x-5} \right) &= \frac{(x+1)(x-3)}{(x+1)(x-5)} \\
+    &= \frac{x-3}{x-5}
+\end{align*}
+
+% There are multiple options for this, such as \big and \bigg, but the easiest option for paired delimiters is \left( \right), replacing the () with the delimiter of your choice.
+
+\section{Limits}
+% The command \lim_{} will print a limit in the way you are used to seeing in calculus. EVERYTHING you want under the "lim" should go in the {}.
+
+Definition of the derivative of \( f(x) = \frac{1}{\sqrt{x}} \) using \(\displaystyle\lim_{h \to 0}\) in your work. % \displaystyle will make things in inline math mode print like they would in display mode. This will stretch the height of your line. Trying experiment with \lim with and without \displaystyle to see the difference.
+% Note that \displaystyle typically only affects the next following command.
+
+\begin{align*}
+    \frac{d}{dx} \left[ \frac{1}{\sqrt{x}} \right] &= \lim_{h \to 0} \frac{\frac{1}{\sqrt{x+h} } - \frac{1}{\sqrt{x}}}{h} \\
+    &= \lim_{h \to 0} \frac{\sqrt{x}-\sqrt{x+h} }{h\sqrt{x}\sqrt{x+h}} \\
+    &\vdots \\
+    &= \frac{-1}{2\sqrt{x^3}}
+\end{align*}
+
+% Misc. commands we haven't talked about: \sqrt{} makes a square root over the argument, and \vdots prints three vertical dots (notice that \sqrt{} takes an argument but \vdots does not).
+
+\section{Matrices and their relatives}
+% There are multiple ways to align a system of equations (some are nicer than others, and there are additionally a few packages that help with this).
+
+Solve the system:
+\begin{align*} % Look at how bad this looks
+    & 2x_1 &+ & x_2  &- & x_3  &= 1 \\
+    &  x_1 &- & 3x_2 &  &      &= -5 \\
+    & 4x_1 &  &      &+ & 2x_3 &= 10 
+\end{align*}
+
+\begin{eqnarray} % Look at how good this looks
+    \begin{array}{rcrcrcr}
+    2x_1 &+ & x_2  &- & x_3  &= & 1 \\
+     x_1 &- & 3x_2 &  &      &= & -5 \\
+    4x_1 &  &      &+ & 2x_3 &= & 10
+    \end{array}
+\end{eqnarray}
+
+% Array is set up just like a tabular environment. In my experience, eqnarray with array inside typically looks a lot better for lining up many columns.
+
+This system is equivalent to the following matrix equation.
+
+% If you like to use the bmatrix environment, that is okay as well and is pretty easy to use (look up documentation if you are interested, ShareLatex/Overleaf has a good tutorial).
+% However, we can make a matrix ourselves using delimiters and an array environment, which is typically more easily customizable. Again, note that array environments are structured in the same way as tabular environments.
+
+\[
+\left[
+\begin{array}{rrr}
+    2 & 1 & -1 \\
+    1 & -3 & 0 \\
+    4 & 0 & 2 
+\end{array}
+\right]
+\left[
+\begin{array}{r}
+    x_1 \\
+    x_2 \\
+    x_3
+\end{array}
+\right]
+=
+\left[
+\begin{array}{r}
+    1 \\
+    -5 \\
+    10
+\end{array}
+\right]
+\]
+
+% Notice that since we have not specified any line breaks, all of these matrices appear on the same line in the PDF document, even though our code takes up several lines in the .TeX document.
+% You can format your .tex file in whatever way you think is the most readable/understandable and you will usually get the same output.
+
+
+\end{document}

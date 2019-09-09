@@ -1,0 +1,60 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage[margin=1in]{geometry}
+
+\title{Math 340 Day 2}
+\author{Zane and Dr. McNelis}
+\date{21 August, 2019}
+
+\begin{document}
+
+\maketitle
+
+\section{Lists}
+% How to make an ordered/numbered list
+This list contains 5 items, but this is not one of them.
+\begin{enumerate}
+    \item Bears
+    \item Beets
+    \begin{enumerate}
+        \item Roasted
+        \item Raw
+        \item Pickled
+    \end{enumerate}
+    \item Battlestar Galactica
+    \item Fourth list item
+    \item Fifth list item
+\end{enumerate}
+
+\vspace{0.5cm} % Remember, this makes a block of vertical space on the page.
+
+% How to make an unordered list / bullet points
+Types of bears. (Your list is about your favorite TV shows!)
+\begin{itemize}
+    \item Polar bears.
+    \item Black bears.
+    \begin{itemize}
+        \item No shoulder hump.
+        \item Long, pointed ears.
+        \item Flat facial profile.
+    \end{itemize}
+    \item Grizzly bears.
+    \begin{itemize}
+        \item Characteristic shoulder hump.
+        \item Small, round ears.
+        \item Concave facial profile.
+    \end{itemize}
+\end{itemize}
+
+\section{The Tabular Environment}
+
+\begin{tabular}{ccccc} % placeholders specify alignment! c, l, or r works. This table has 5 centered columns. Remember & goes to next column, \\ goes to next row. You can add | between placeholders to make vertical lines in your table. E.g. try |c|c|c|c|c| to see.
+M & T & W & R & F \\
+\hline \\ % This prints a horizontal line.
+MATH 340 & & MATH 340 & & MATH 340 \\
+ECET 321 & & ECET 321 & & ECET 321 \\
+ & MATH 370 & & MATH 370 &  \\
+\end{tabular}
+
+
+\end{document}
