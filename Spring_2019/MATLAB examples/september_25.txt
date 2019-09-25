@@ -1,0 +1,222 @@
+sin(pi/6)
+
+ans =
+
+    0.5000
+
+sqrt(6)
+
+ans =
+
+    2.4495
+
+format long
+sqrt(6)
+
+ans =
+
+   2.449489742783178
+
+format rat;
+pi
+
+ans =
+
+     355/113   
+
+sin(pi/6)
+
+ans =
+
+       1/2     
+
+sqrt[4]
+ sqrt[4]
+     
+{Error: Invalid expression. When calling a function or indexing a variable, use parentheses. Otherwise, check for
+mismatched delimiters.
+} 
+exp(2)
+
+ans =
+
+    2431/329   
+
+format short;
+cos(pi)^2
+
+ans =
+
+     1
+
+A = [1 2 3 4; 5, 6, 7, 8];
+
+
+
+
+
+
+A = [1 2 3 4; 5, 6, 7, 8];
+A = [1 2 3 4; 5, 6, 7, 8]
+
+A =
+
+     1     2     3     4
+     5     6     7     8
+
+
+
+
+
+
+
+
+
+
+
+
+
+matrix2 = [2, 3, 4, 5, 6; 1, 2, 4, 5, 6; 7, 6, 8, 7, 11];
+matrix2 = [2, 3, 4, 5, 6; 1, 2, 4, 5, 6; 7, 6, 8, 7, 11]
+
+matrix2 =
+
+     2     3     4     5     6
+     1     2     4     5     6
+     7     6     8     7    11
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+row2 = matrix2(2,:)
+
+row2 =
+
+     1     2     4     5     6
+
+matrix2 = [2, 3, 4, 5, 6; 1, 2, 4, 5, 6; 7, 6, 8, 7, 11]
+
+matrix2 =
+
+     2     3     4     5     6
+     1     2     4     5     6
+     7     6     8     7    11
+
+nsm = [2, 3; 3, 4; 5, 6]
+
+nsm =
+
+     2     3
+     3     4
+     5     6
+
+nsm^2
+{Error using <a href="matlab:matlab.internal.language.introspective.errorDocCallback('mpower', 'C:\Program Files\MATLAB\R2019a\toolbox\matlab\ops\mpower.m', 51)" style="font-weight:bold"> ^ </a> (<a href="matlab: opentoline('C:\Program Files\MATLAB\R2019a\toolbox\matlab\ops\mpower.m',51,0)">line 51</a>)
+Incorrect dimensions for raising a matrix to a power. Check that the matrix is square and the power is a scalar.
+To perform elementwise matrix powers, use '.^'.
+} 
+nsm.^2
+
+ans =
+
+     4     9
+     9    16
+    25    36
+
+x = -2:1:2; % Generates the sequence of numbers -2, -1, 0, 1, 2.
+
+ans =
+
+    0.5000
+
+
+ans =
+
+    2.4495
+
+
+ans =
+
+   2.449489742783178
+
+
+ans =
+
+     355/113   
+
+
+ans =
+
+       1/2     
+
+Undefined function 'arctan' for input arguments of type 'double'.
+
+Error in <a href="matlab:matlab.internal.language.introspective.errorDocCallback('september_25', 'C:\Users\wzbillings1\Documents\MATLAB\september_25.m', 27)" style="font-weight:bold">september_25</a> (<a href="matlab: opentoline('C:\Users\wzbillings1\Documents\MATLAB\september_25.m',27,0)">line 27</a>)
+d = arctan(27);
+
+clc
+x = -2:1:2;
+y = x^2
+{Error using <a href="matlab:matlab.internal.language.introspective.errorDocCallback('mpower', 'C:\Program Files\MATLAB\R2019a\toolbox\matlab\ops\mpower.m', 51)" style="font-weight:bold"> ^ </a> (<a href="matlab: opentoline('C:\Program Files\MATLAB\R2019a\toolbox\matlab\ops\mpower.m',51,0)">line 51</a>)
+Incorrect dimensions for raising a matrix to a power. Check that the matrix is square and the power is a scalar. To
+perform elementwise matrix powers, use '.^'.
+} 
+y = x.^2;
+plot(x,y)
+plot(x,y,'*')
+plot(x,y,'h')
+plot(x,y,'hm')
+
+ans =
+
+    0.5000
+
+
+ans =
+
+    2.4495
+
+
+ans =
+
+   2.449489742783178
+
+
+ans =
+
+     355/113   
+
+
+ans =
+
+       1/2     
+
+clear all; clc
+x = -4:0.01:4;
+y = atan(x)./(x.^2+1);
+plot(x,y)
+title("This function's name is Gerald.")
+x = -5:0.01:10;
+f = exp(sin(x));
+g = cos(x).*exp(sin(x));
+
+plot(x,f,g)
+{Error using <a href="matlab:matlab.internal.language.introspective.errorDocCallback('plot')" style="font-weight:bold">plot</a>
+Data must be a single matrix Y or a list of pairs X,Y.
+} 
+plot(x,f,'b',x,g,'r')
+diary off
