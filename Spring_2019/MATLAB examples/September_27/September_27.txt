@@ -1,0 +1,123 @@
+% Class diary for MATLAB stuff on 27 September, 209
+% We want to graph y = sin(2x); y = 2x - (8x^3)/6 + (32x^5)/120
+% on the interval [-2pi, 2pi]
+% First we need to create an x-vector
+x = linspace(-2*pi,2*pi) % Creates 100 evenly spaced values from a to b
+
+x =
+
+  Columns 1 through 6
+
+   -6.2832   -6.1563   -6.0293   -5.9024   -5.7755   -5.6485
+
+  Columns 7 through 12
+
+   -5.5216   -5.3947   -5.2677   -5.1408   -5.0139   -4.8869
+
+  Columns 13 through 18
+
+   -4.7600   -4.6331   -4.5061   -4.3792   -4.2523   -4.1253
+
+  Columns 19 through 24
+
+   -3.9984   -3.8715   -3.7445   -3.6176   -3.4907   -3.3637
+
+  Columns 25 through 30
+
+   -3.2368   -3.1099   -2.9829   -2.8560   -2.7291   -2.6021
+
+  Columns 31 through 36
+
+   -2.4752   -2.3483   -2.2213   -2.0944   -1.9675   -1.8405
+
+  Columns 37 through 42
+
+   -1.7136   -1.5867   -1.4597   -1.3328   -1.2059   -1.0789
+
+  Columns 43 through 48
+
+   -0.9520   -0.8251   -0.6981   -0.5712   -0.4443   -0.3173
+
+  Columns 49 through 54
+
+   -0.1904   -0.0635    0.0635    0.1904    0.3173    0.4443
+
+  Columns 55 through 60
+
+    0.5712    0.6981    0.8251    0.9520    1.0789    1.2059
+
+  Columns 61 through 66
+
+    1.3328    1.4597    1.5867    1.7136    1.8405    1.9675
+
+  Columns 67 through 72
+
+    2.0944    2.2213    2.3483    2.4752    2.6021    2.7291
+
+  Columns 73 through 78
+
+    2.8560    2.9829    3.1099    3.2368    3.3637    3.4907
+
+  Columns 79 through 84
+
+    3.6176    3.7445    3.8715    3.9984    4.1253    4.2523
+
+  Columns 85 through 90
+
+    4.3792    4.5061    4.6331    4.7600    4.8869    5.0139
+
+  Columns 91 through 96
+
+    5.1408    5.2677    5.3947    5.5216    5.6485    5.7755
+
+  Columns 97 through 100
+
+    5.9024    6.0293    6.1563    6.2832
+
+% Remember to do semi colons if you don't want that
+x = linspace(-2*pi, 2*pi, 1001); % the last argument says how many points we want
+y1 = sin(2*x);
+% Why didn't we can an error??????
+% Scalar times a vector is allowed :)
+y2 = 2*x - (8*x^3)/6 + (32*x^5)/120;
+{Error using <a href="matlab:matlab.internal.language.introspective.errorDocCallback('mpower', 'C:\Program Files\MATLAB\R2019a\toolbox\matlab\ops\mpower.m', 51)" style="font-weight:bold"> ^ </a> (<a href="matlab: opentoline('C:\Program Files\MATLAB\R2019a\toolbox\matlab\ops\mpower.m',51,0)">line 51</a>)
+Incorrect dimensions for raising a matrix to a power. Check
+that the matrix is square and the power is a scalar. To perform
+elementwise matrix powers, use '.^'.
+} 
+% This time we have to use .^ rather than ^
+y2 = 2*x - (8*x.^3)/6 + (32*x.^5)/120;
+% You can hit the up arrow to get to things you already typed
+figure() % open a new figure
+plot(x,y1,"-r",x,y2,"--b")
+% Lets adjust the limits
+axis([-2*pi 2*pi -5 5])
+legend
+legend("f(x)","T5(x)")
+%  Let's put a grid in the background
+grid on
+title("A Fun Plot :)")
+% Now let's make a simple function
+% These are called anonymous functions in MATLAB
+% But are sometimes called Lambdas if you look online
+g = @(x) (atan(x)./(sqrt(x.^2+1))); % Vector compatible
+g
+
+g =
+
+  <a href="matlab:helpPopup function_handle" style="font-weight:bold">function_handle</a> with value:
+
+    @(x)(atan(x)./(sqrt(x.^2+1)))
+
+g([1:5])
+
+ans =
+
+    0.5554    0.4951    0.3950    0.3216    0.2693
+
+figure
+plot(x,g(x),':md')
+title("This plot is even more fun than the first one.")
+xlabel('x')
+ylabel('g(x)')
+diary off

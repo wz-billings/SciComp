@@ -1,0 +1,57 @@
+chutes_and_ladders
+% Notice that nothing was printed, but there are new variables in the workspace.
+X_1
+
+X_1 =
+
+         0
+    0.6000
+    0.6000
+    0.6000
+         0
+    0.6000
+    0.6000
+         0
+         0
+
+chutes_and_ladders
+
+X_2 =
+
+         0
+         0
+    0.1200
+    0.7200
+         0
+    0.3600
+    0.8400
+         0
+    0.9600
+
+eigs(M)
+
+ans =
+
+    1.0000
+    0.4828
+   -0.2000
+   -0.0828
+         0
+         0
+
+clc
+chutes_and_ladders
+
+X_6 =
+
+         0
+         0
+         0
+    0.0474
+         0
+    0.0198
+    0.0476
+         0
+    2.8852
+
+diary off

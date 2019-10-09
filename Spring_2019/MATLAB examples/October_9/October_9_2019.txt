@@ -1,0 +1,259 @@
+% Intro to programming with MATLAB
+x = 12.87 % Numerical / double / floating point number
+
+x =
+
+   12.8700
+
+y = "string" % Character / string
+
+y = 
+
+    "string"
+
+4 == sqrt(16) % Logical/boolean expression
+
+ans =
+
+  <a href="matlab:helpPopup logical" style="font-weight:bold">logical</a>
+
+   1
+
+z = true % Logical
+
+z =
+
+  <a href="matlab:helpPopup logical" style="font-weight:bold">logical</a>
+
+   1
+
+% Variable scoping
+% A variable defined in the command line is global
+my_var = pi*3 / sqrt(exp(11+2.3))
+
+my_var =
+
+    0.0122
+
+% A variable defined in a function is local
+% You can easily create a function in MATLAB by clicking new -> dropdown menu -> function
+% MATLAB gets confused if your function name and file name are not the same
+whos
+  Name        Size            Bytes  Class      Attributes
+
+  ans         1x1                 1  logical              
+  my_var      1x1                 8  double               
+  x           1x1                 8  double               
+  y           1x1               158  string               
+  z           1x1                 1  logical              
+
+% whos will show all global variables
+my_y = my_function(my_var) % calling our function with my_var as an argument
+In: 0.012196,
+Out: 2.000002,
+Local variable: 0.000002
+
+my_y =
+
+    2.0000
+
+% out is a local variable, but we are saving it to a global variable called my_y
+whos
+  Name        Size            Bytes  Class      Attributes
+
+  ans         1x1                 1  logical              
+  my_var      1x1                 8  double               
+  my_y        1x1                 8  double               
+  x           1x1                 8  double               
+  y           1x1               158  string               
+  z           1x1                 1  logical              
+
+% in, out, and this_is_a_local_variable are gone, because they aren't global
+% my_var becomes "in" in the MATLAB function nightclub
+% Building blocks of programming
+2 != 3
+ 2 != 3
+   
+{Error: Invalid use of operator.
+} 
+2 ~= 3
+
+ans =
+
+  <a href="matlab:helpPopup logical" style="font-weight:bold">logical</a>
+
+   1
+
+% 1 = true, 0 = false
+% Logical statements examples
+~(4>-2)|(abs(-3)==3)
+
+ans =
+
+  <a href="matlab:helpPopup logical" style="font-weight:bold">logical</a>
+
+   1
+
+(6<10)&(7>8)|(5*3~=60/4)
+
+ans =
+
+  <a href="matlab:helpPopup logical" style="font-weight:bold">logical</a>
+
+   0
+
+(3 == 3) | (3/0 == 1)
+
+ans =
+
+  <a href="matlab:helpPopup logical" style="font-weight:bold">logical</a>
+
+   1
+
+(3/0 == 1) | (3 == 3)
+
+ans =
+
+  <a href="matlab:helpPopup logical" style="font-weight:bold">logical</a>
+
+   1
+
+3/0
+
+ans =
+
+   Inf
+
+3/0 == 1
+
+ans =
+
+  <a href="matlab:helpPopup logical" style="font-weight:bold">logical</a>
+
+   0
+
+%MATLAB doesn't raise zero division errors:( be careful!
+eight_week(87)
+Eighth week and all is well!% oh no why is my cursor here!!!! :(
+% "\n" is a special character that makes a new line
+eight_week(12)
+Please go see your advisor as soon as possible.
+eight_week(">:U")
+{Error using <a href="matlab:matlab.internal.language.introspective.errorDocCallback('ge')" style="font-weight:bold"> >= </a>
+Comparison between string and double is not supported.
+
+Error in <a href="matlab:matlab.internal.language.introspective.errorDocCallback('eight_week', 'C:\Users\emcnelis\Documents\MATLAB\eight_week.m', 7)" style="font-weight:bold">eight_week</a> (<a href="matlab: opentoline('C:\Users\emcnelis\Documents\MATLAB\eight_week.m',7,0)">line 7</a>)
+if (average >= 70)
+} 
+% Testing the darts function
+darts(6*rand(), 4*rand(), 0)
+Not bad. You are in the yellow ring!
+
+ans =
+
+    10
+
+darts(6*rand(), 4*rand(), 0)
+Keep practicing!
+
+ans =
+
+     5
+
+darts(6*rand(), 4*rand(), 0)
+Keep practicing!
+
+ans =
+
+     5
+
+darts(6*rand(), 4*rand(), 0)
+Keep practicing!
+
+ans =
+
+     5
+
+darts(6*rand(), 4*rand(), 0)
+Not bad. You are in the yellow ring!
+
+ans =
+
+    10
+
+darts(6*rand(), 4*rand(), 0)
+Keep practicing!
+
+ans =
+
+     5
+
+darts(6*rand(), 4*rand(), 0)
+Keep practicing!
+
+ans =
+
+     5
+
+darts(6*rand(), 4*rand(), 0)
+Keep practicing!
+
+ans =
+
+     5
+
+darts(6*rand(), 4*rand(), 0)
+Not bad. You are in the yellow ring!
+
+ans =
+
+    10
+
+darts(6*rand(), 4*rand(), 0)
+Not bad. You are in the yellow ring!
+
+ans =
+
+    10
+
+darts(6*rand(), 4*rand(), 0)
+Keep practicing!
+
+ans =
+
+     5
+
+darts(6*rand(), 4*rand(), 0)
+Not bad. You are in the yellow ring!
+
+ans =
+
+    10
+
+darts()
+{Not enough input arguments.
+
+Error in <a href="matlab:matlab.internal.language.introspective.errorDocCallback('darts', 'C:\Users\emcnelis\Documents\MATLAB\darts.m', 9)" style="font-weight:bold">darts</a> (<a href="matlab: opentoline('C:\Users\emcnelis\Documents\MATLAB\darts.m',9,0)">line 9</a>)
+distance = sqrt((x - 5)^2 + (y - 5)^2);
+} 
+darts("a", true, 11)
+{Undefined operator '-' for input arguments of type 'string'.
+
+Error in <a href="matlab:matlab.internal.language.introspective.errorDocCallback('darts', 'C:\Users\emcnelis\Documents\MATLAB\darts.m', 9)" style="font-weight:bold">darts</a> (<a href="matlab: opentoline('C:\Users\emcnelis\Documents\MATLAB\darts.m',9,0)">line 9</a>)
+distance = sqrt((x - 5)^2 + (y - 5)^2);
+} 
+darts("16, true, 11)
+ darts("16, true, 11)
+       
+{Error: String is not terminated properly.
+} 
+darts(16, true, 11)
+Perhaps you should take up hopscotch...
+
+ans =
+
+     9
+
+% Important: notice that boolean variables are AUTOMATICALLY coerced to their numeric equivalents
+% That might be something that can cause unexpected results1
+diary off
