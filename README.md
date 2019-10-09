@@ -6,6 +6,6 @@ Currently this repo contains:
 
 * constrained_max.nb: a Mathematica notebook showing several examples of how plots can be made in Mathematica. This example focuses on solving a constrained maximization problem both graphically and analytically, but the plotting techniques can be extrapolated. 
 
-* LaTeX examples: Sample .tex and accessary (image and .bib) files needed for compiling. These are examples written live during class in order to cover concepts in TeX during the first part of the course during Fall 2019.
+* Leslie Matrix Activity: An activity, designed for MATLAB, to introduce students to Leslie/Leftkovitch class-structured matrix population models. A lot of material was sourced from either my General Ecology class or Hal Caswell's book. Designed as an exploratory activity for students to dive in and see how things work for themselves.
 
-* Excel examples: Spreadsheets created in real-time along with the class to demonstrate Excel functions and basic modeling during Fall 2019.
+* Fall 2019: All of the daily stuff I have made during class during the Fall 2019 semester.
