@@ -6,8 +6,6 @@
 #  Moluccan butterfly Hoops' Longwing (Heliconius Hoopsus).
 ###
 
-setwd("~/Stuff/Zane/Programs/WCU_courses/Sci_Comp/Activities/Hoops_longwing_data")
-
 # Parameters for data generation.
 set.seed(340)
 N <- 50
@@ -17,9 +15,9 @@ wing_length <- rnorm(N, 24, 3)
 
 # Hoops' Longwing can be found on three islands. 60% chance a sample was 
 #  collected on Ternate, 35% on Tidore, and 15% on Kayoa.
-population <- as.factor(sample(c("Ternate", "Tidore", "Kayoa"), 
+population <- sample(c("Ternate", "Tidore", "Kayoa"), 
                                N, replace = TRUE, 
-                               prob = c(0.6, 0.35, 0.15)))
+                               prob = c(0.6, 0.35, 0.15))
 
 # Adjust wing length based on population.
 for (i in 1:length(population)) {
@@ -41,7 +39,7 @@ age <- age * 12
 age <- floor(age + rnorm(N, mean = 12, sd = 3))
 
 # Number of offspring is a function of age.
-num_offspring <- floor(8.2 * log(age) + 4) + rnorm(N, 0, 1)
+num_offspring <- floor(8.2 * log(age) + 4 + rnorm(N, 0, 1))
 
 # Feeding range (sq km) is a function of age.
 feeding_range <- round((0.2 * 1.1^age) + rnorm(N, 2, 0.7), 2)
@@ -64,23 +62,26 @@ antenna_length <- round((3.2*log(wing_length) - 10)+ rnorm(N, log(wing_length), 
 # Num spots is a hyperbolic function of wing width.
 num_spots <- floor(50/wing_width)
 
+# Unique sample id
+library(stringi)
+library(stringr)
+sample_id_pop <- str_trunc(population, 3, side = "right", ellipsis = "")
+sample_id_sample <- str_pad(as.character(1:N), nchar(as.character(N)), pad = "0", "left")
+collector_id <- sample(c("ZB", "MP", "EM", "ZW"), size = N, replace = TRUE)
+sample_id <- paste(sample_id_pop, sample_id_sample, collector_id, sep = "_")
+
+# Total body size is a multivariate function.
+body_length <- round((0.2*wing_length + 0.2*wing_width + 1) + rnorm(N,0,1),2)
+
 # Join together into data frame.
 butterfly <- data.frame(wing_length, wing_width, age, num_offspring, 
                         feeding_range, color_peak, num_mates, avg_scale_size,
-                        antenna_length, num_spots, population, dispersal_distance)
-pairs(butterfly)
+                        antenna_length, num_spots, population, dispersal_distance,
+                        body_length, sample_id)
+#pairs(butterfly)
 
 write.csv(butterfly, "hoops_longwing_study.csv")
 
 butterfly_sample <- data.frame(wing_length, wing_width, age, num_offspring, feeding_range)
-pairs(butterfly_sample)
+#pairs(butterfly_sample)
 write.csv(butterfly_sample, "hoops_longwing_sample.csv")
-
-gen_log_plots <- function(x,y) {
-  par(mfrow = c(2,2))
-  plot(x,y)
-  plot(log(x), y)
-  plot(x, log(y))
-  plot(log(x), log(y))
-  par(mfrow = c(1,1))
-}

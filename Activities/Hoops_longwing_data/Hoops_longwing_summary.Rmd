@@ -1,0 +1,58 @@
+---
+title: "Hoops Longwing Data Analysis"
+author: "Zane Billings"
+date: "15 November 2019"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE)
+if (require('tidyverse')==FALSE) {install.packages('tidyverse', repos="https://cran.rstudio.com")}
+if (require('GGally')==FALSE) {install.packages('GGally', repos="https://cran.rstudio.com")}
+```
+
+In order to start analyzing the Hoops' Longwing sample data, we will first load the `tidyverse` package suite. After loading the packages we need, we can use `readr::read_csv()` to load in the data. But, notice the imported data frame has a useless column at the beginning, which we can easily remove manually.
+
+```{r initialize}
+library(tidyverse)
+
+butterfly <- read_csv("hoops_longwing_study.csv")
+butterfly <- butterfly[ , -1]
+```
+
+Now that we have the data imported, we can go ahead and take a quick look at the summary and structure.
+```{r summary}
+summary(butterfly)
+str(butterfly)
+```
+
+The only real change we need to make is to convert the `population` variable into a factor, since the functions provided in `readr` do not coerce strings to factors by default.
+
+```{r pop factor}
+butterfly$population <- as.factor(butterfly$population)
+summary(butterfly$population)
+```
+
+Now that all of our variables are imported correctly, let's go ahead and document what each variable means.
+
+\begin{table}[h!]
+\centering
+\begin{tabular}{l | l}
+Variable & Description \\
+\hline
+Wing length & \\
+Wing width & \\
+Age & \\
+Number of offspring & \\
+Feeding range & \\
+Color peak & \\
+Number of mates & \\
+Avg. scale size & \\
+Antenna length & \\
+Number of spots & \\
+Population & \\
+Dispersal distance & \\
+Body length & \\
+Sample ID & 
+\end{tabular}
+\end{table}
