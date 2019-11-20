@@ -45,6 +45,7 @@ summary(butterfly$population)
 So, now we can start exploring our data. Let's start by making histograms of all the numeric data.
 
 ```{r histograms}
+# Sturges Rule calculation for number of histogram bins.
 num_bins <- ceiling(log2(nrow(butterfly))) + 1
 butterfly %>% 
   select(-population) %>% 
@@ -128,4 +129,47 @@ butterfly %>%
   select(-c(sample_id, population)) %>%
   cor() %>% 
   ggcorrplot()
+```
+
+\vfill\newpage
+
+Just an example of a scatterplot.
+
+```{r scatterplot}
+butterfly %>% 
+  select(wing_length, wing_width) %>% 
+  ggplot(aes(x = wing_length, y = wing_width)) +
+  geom_point(alpha = 0.2) + 
+  geom_smooth(method = "lm", lty = 2) +
+  labs(x = "Wing length (cm)", y = "Wing width (cm)") +
+  theme_minimal()
+```
+
+\vfill\newpage
+
+We can also do a LOT with scatterplots.
+
+```{r adv_scatter1}
+butterfly %>% 
+  select(wing_length, wing_width, population) %>% 
+  ggplot(aes(x = wing_length, 
+             y = wing_width, 
+             col = population)) +
+  geom_point(alpha = 0.2) + 
+  geom_smooth(method = "lm")
+```
+
+\vfill\newpage
+
+There's literally so many aesthetic arguments you can use for a scatterplot (I contend that not all of them are useful).
+
+```{r adv_scatter2}
+butterfly %>% 
+  select(wing_length, wing_width, population, antenna_length, body_length) %>%
+  ggplot(aes(x = wing_length,
+             y = wing_width,
+             col = antenna_length,
+             size = body_length)) +
+  geom_point(alpha = 0.2) + 
+  facet_wrap(~population)
 ```

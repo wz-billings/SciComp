@@ -8,7 +8,7 @@
 
 # Parameters for data generation.
 set.seed(340)
-N <- 10000
+N <- 1000
 
 # Wing length is normally distributed with mean 24 inches and SD 3 inches.
 wing_length <- rnorm(N, 24, 3)
