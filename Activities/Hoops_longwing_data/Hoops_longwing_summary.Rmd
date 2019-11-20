@@ -1,5 +1,5 @@
 ---
-title: "Hoops Longwing Data Analysis"
+title: "Hoops Longwing Sample Data Visualization"
 author: "Zane Billings"
 date: "15 November 2019"
 output: pdf_document
@@ -9,6 +9,8 @@ output: pdf_document
 knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE)
 if (require('tidyverse')==FALSE) {install.packages('tidyverse', repos="https://cran.rstudio.com")}
 if (require('GGally')==FALSE) {install.packages('GGally', repos="https://cran.rstudio.com")}
+if (require('pander')==FALSE) {install.packages('Pander', repos="https://cran.rstudio.com")}
+if (require('ggcorrplot')==FALSE) {install.packages('Pander', repos="https://cran.rstudio.com")}
 ```
 
 In order to start analyzing the Hoops' Longwing sample data, we will first load the `tidyverse` package suite. After loading the packages we need, we can use `readr::read_csv()` to load in the data. But, notice the imported data frame has a useless column at the beginning, which we can easily remove manually.
@@ -33,26 +35,70 @@ butterfly$population <- as.factor(butterfly$population)
 summary(butterfly$population)
 ```
 
-Now that all of our variables are imported correctly, let's go ahead and document what each variable means.
+So, now we can start exploring our data. Let's start by making histograms of all the numeric data.
 
-\begin{table}[h!]
-\centering
-\begin{tabular}{l | l}
-Variable & Description \\
-\hline
-Wing length & \\
-Wing width & \\
-Age & \\
-Number of offspring & \\
-Feeding range & \\
-Color peak & \\
-Number of mates & \\
-Avg. scale size & \\
-Antenna length & \\
-Number of spots & \\
-Population & \\
-Dispersal distance & \\
-Body length & \\
-Sample ID & 
-\end{tabular}
-\end{table}
+```{r histograms}
+num_bins <- ceiling(log2(nrow(butterfly))) + 1
+butterfly %>% 
+  select(-population) %>% 
+  gather(key = "field", value = "value", -"sample_id") %>% 
+  ggplot(aes(x = value)) +
+  geom_histogram(col = "black", 
+                 fill = "white", 
+                 position = "identity",
+                 bins = num_bins) +
+  facet_wrap(~field, scales = "free")
+
+# An alternative way to view the data
+butterfly %>% 
+  select(-population) %>% 
+  gather(key = "field", value = "value", -"sample_id") %>% 
+  ggplot(aes(x = value)) +
+  geom_density(adjust = 2) +
+  facet_wrap(~field, scales = "free")
+```
+
+Now we have one categorical variable, so let's look at all of our data stratified by the `population` value.
+```{r violins}
+butterfly %>%
+  gather(key = "field", value = "value", -c(sample_id, population)) %>% 
+  ggplot(aes(x = population, y = value, fill = population)) +
+  geom_violin(adjust = 2) +
+  facet_wrap(~field, scales = "free") + 
+  theme(legend.position = "bottom")
+```
+
+Now, using the `GGally` package, we can also make a scatterplot matrix like we did with `graphics::pairs()`.
+
+```{r pairs}
+library(GGally)
+
+butterfly[1:100, 1:6] %>%
+  ggpairs(aes(alpha = 0.2))
+
+butterfly[1:100, 7:14] %>% 
+  select(-c(sample_id, population)) %>%
+  ggpairs(aes(alpha = 0.2))
+```
+
+As you can probably see, this visualization is not ideal when we have a lot of data.
+
+Let's try a correlation table as well. However, note that while a correlation table can give us a good sense of linaer relationships, we lose any information we had about nonlinear relationships, which we have to examine visually if we don't have a hypothesis about their existence.
+
+```{r corrtable}
+library(pander)
+butterfly %>% 
+  select(-c(sample_id, population)) %>% 
+  cor() %>% 
+  pander()
+```
+
+Or, we can use a function from the `ggcorrplot` library to make a visual representation of the same data.
+
+```{r corrplot}
+library(ggcorrplot)
+butterfly %>% 
+  select(-c(sample_id, population)) %>%
+  cor() %>% 
+  ggcorrplot()
+```

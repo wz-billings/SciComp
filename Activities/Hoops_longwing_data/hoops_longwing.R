@@ -8,7 +8,7 @@
 
 # Parameters for data generation.
 set.seed(340)
-N <- 50
+N <- 10000
 
 # Wing length is normally distributed with mean 24 inches and SD 3 inches.
 wing_length <- rnorm(N, 24, 3)
@@ -35,7 +35,7 @@ wing_width <- round((wing_length/3 + 2) + rnorm(N, 0, 1), 2)
 
 # Age (months) follows this distribution that I made up.
 age <- sample(0:3, size = N, replace = TRUE, prob = c(0.5,0.25, 0.15, 0.1))
-age <- age * 12
+age <- age * 12 + 1
 age <- floor(age + rnorm(N, mean = 12, sd = 3))
 
 # Number of offspring is a function of age.
@@ -57,7 +57,7 @@ num_mates <- floor((0.01 * wing_length^(2) + 0.1*wing_length) + rnorm(50, 0, 1))
 avg_scale_size <- round((0.04*wing_length^2 + 20) + rnorm(N, mean = 0, sd = 0.1 * mean(wing_length)),2)
 
 # Antenna length is a function of the log of wing length.
-antenna_length <- round((3.2*log(wing_length) - 10)+ rnorm(N, log(wing_length), 0.02*log(wing_length)),2)
+antenna_length <- round((3.2*log(wing_length) - 8)+ rnorm(N, log(wing_length), 0.02*log(wing_length)),2)
 
 # Num spots is a hyperbolic function of wing width.
 num_spots <- floor(50/wing_width)

@@ -1,0 +1,17 @@
+Description of Hoops Longwing data
+
+index, int, NA, NA
+wing_length, float, wingspan of sample, cm
+wing_width, float, average of top-to-bottom measurements of sample wings, cm
+age, int, estimated age of sample, days
+num_offspring, int, estimate number of offspring produced by sample, count
+feeding_range, float, estimated area where sample collects food, km^2
+color_peak, float, highest UV-Vis transmission peak for sample scale, nm
+num_mates, int, observed number of sample mates, count
+avg_scale_size, float, average scale area of five sample scales, nm
+antenna_length, float, average length of sample antennae, cm
+num_spots, int, number of dark spots on sample wings, count
+population, factor, population from which sample was collected, NA
+dispersal_distance, float, estimated distance from clutch site, km
+body_length, float, head to tip length of sample body, cm
+sample_id, chr, key field identifying population, sample ID, and collector, NA
