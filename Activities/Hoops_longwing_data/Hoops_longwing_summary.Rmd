@@ -25,6 +25,11 @@ butterfly <- butterfly[ , -1]
 Now that we have the data imported, we can go ahead and take a quick look at the summary and structure.
 ```{r summary}
 summary(butterfly)
+```
+
+\vfill\newpage
+
+```{r str}
 str(butterfly)
 ```
 
@@ -34,6 +39,8 @@ The only real change we need to make is to convert the `population` variable int
 butterfly$population <- as.factor(butterfly$population)
 summary(butterfly$population)
 ```
+
+\vfill\newpage
 
 So, now we can start exploring our data. Let's start by making histograms of all the numeric data.
 
@@ -48,7 +55,13 @@ butterfly %>%
                  position = "identity",
                  bins = num_bins) +
   facet_wrap(~field, scales = "free")
+```
 
+\vfill\newpage
+
+We can also visualize the distributions of the data using density curves, although we have to adjust the interpolation settings because part of our data is integers.
+
+```{r densitycurves}
 # An alternative way to view the data
 butterfly %>% 
   select(-population) %>% 
@@ -57,6 +70,8 @@ butterfly %>%
   geom_density(adjust = 2) +
   facet_wrap(~field, scales = "free")
 ```
+
+\vfill\newpage
 
 Now we have one categorical variable, so let's look at all of our data stratified by the `population` value.
 ```{r violins}
@@ -68,18 +83,28 @@ butterfly %>%
   theme(legend.position = "bottom")
 ```
 
-Now, using the `GGally` package, we can also make a scatterplot matrix like we did with `graphics::pairs()`.
+\vfill\newpage
 
-```{r pairs}
+Now, using the `GGally` package, we can also make a scatterplot matrix like we did with `graphics::pairs()`. In order to get this to be visible, we'll need to split up the data.
+
+```{r pairs1}
 library(GGally)
 
 butterfly[1:100, 1:6] %>%
   ggpairs(aes(alpha = 0.2))
+```
 
+\vfill\newpage
+
+For the second half of the data, we also need to exclude our non-numeric variables.
+
+```{r pairs2}
 butterfly[1:100, 7:14] %>% 
   select(-c(sample_id, population)) %>%
   ggpairs(aes(alpha = 0.2))
 ```
+
+\vfill\newpage
 
 As you can probably see, this visualization is not ideal when we have a lot of data.
 
@@ -92,6 +117,8 @@ butterfly %>%
   cor() %>% 
   pander()
 ```
+
+\vfill\newpage
 
 Or, we can use a function from the `ggcorrplot` library to make a visual representation of the same data.
 
