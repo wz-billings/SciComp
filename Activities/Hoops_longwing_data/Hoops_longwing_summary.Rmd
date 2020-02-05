@@ -100,8 +100,8 @@ butterfly[1:100, 1:6] %>%
 For the second half of the data, we also need to exclude our non-numeric variables.
 
 ```{r pairs2}
-butterfly[1:100, 7:14] %>% 
-  select(-c(sample_id, population)) %>%
+butterfly[1:100, 7:16] %>% 
+  select(-c(sample_id, population, latitude, longitude)) %>%
   ggpairs(aes(alpha = 0.2))
 ```
 

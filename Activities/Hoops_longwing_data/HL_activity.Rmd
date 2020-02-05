@@ -1,0 +1,24 @@
+---
+title: "Geographic Variation of Hoops' Longwing (*Heliconius hoopsus*)"
+author: "Zane Billings"
+date: "2/5/2020"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+Hello, data scientists! In the past few months, I have been hard at work with my butterfly-catching group in Indonesia. Now I am finally back in the United States, and I have got some data that I need analyzed!
+
+```{r butterfly, fig.cap = "A sample image of Hoop's longwing.", fig.align='center', out.height="30%"}
+knitr::include_graphics(here::here("butterfly.jpg"))
+```
+
+We've been tracking the elusive butterfly, *Heliconius hoopsus* (or Hoop's longwing, see the included image above) endemic to three islands in Indonesia: Ternate and Tidore, which are fairly close together, and Kajoa, which is further south.
+
+We are hoping to publish a paper on the morphology of *H. hoopsus*, including the morphological differences between the three populations. Our sequencing data analysis has given us reasons to believe that these three populations are all subpopulations of the same species, but we would like to know more about the specific morphology of each population.
+
+Luckily for you, our team has been expertly trained in data collection, and our data, provided to you in the `hoops_longwing_study.csv` file, is already in ``tidy format'', so there should not be any data cleaning you need to do.
+
+Your task is as follows: perform a cursory analysis of the data to find any patterns or differences you think are interesting, and do a deeper analysis on one of these things. Then, write up your analysis in a way that is both accessible, but provides correct statistical data.
