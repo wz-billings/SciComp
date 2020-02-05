@@ -67,17 +67,32 @@ library(stringi)
 library(stringr)
 sample_id_pop <- str_trunc(population, 3, side = "right", ellipsis = "")
 sample_id_sample <- str_pad(as.character(1:N), nchar(as.character(N)), pad = "0", "left")
-collector_id <- sample(c("ZB", "MP", "EM", "ZW"), size = N, replace = TRUE)
+collector_id <- sample(c("ZB", "EM", "ZW"), size = N, replace = TRUE)
 sample_id <- paste(sample_id_pop, sample_id_sample, collector_id, sep = "_")
 
 # Total body size is a multivariate function.
 body_length <- round((0.2*wing_length + 0.2*wing_width + 1) + rnorm(N,0,1),2)
 
+# Latitude and Longitude
+latitude = longitude <- numeric(N)
+for (i in 1:length(population)) {
+  if (population[i] == "Ternate") {
+    latitude[i] = 0.818385 + runif(1, min = -0.00005, max = 0.00005)
+    longitude[i] = 127.317315 + runif(1, min = -0.00007, max = 0.0001)
+  } else if (population[i] == "Tidore") {
+    latitude[i] = 0.715741 + runif(1, min = -0.00003, max = 0.00015)
+    longitude[i] = 127.439582 + runif(1, min = -0.00002, max = 0.00006)
+  } else {
+    latitude[i] = 0.101211 + runif(1, min = -0.00001, max = 0.00009)
+    longitude[i] = 127.433775 + runif(1, min = -0.0005, max = 0.00012)
+  }
+}
+
 # Join together into data frame.
 butterfly <- data.frame(wing_length, wing_width, age, num_offspring, 
                         feeding_range, color_peak, num_mates, avg_scale_size,
                         antenna_length, num_spots, population, dispersal_distance,
-                        body_length, sample_id)
+                        body_length, latitude, longitude, sample_id)
 #pairs(butterfly)
 
 write.csv(butterfly, "hoops_longwing_study.csv")
