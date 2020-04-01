@@ -57,7 +57,7 @@ num_mates <- floor((0.01 * wing_length^(2) + 0.1*wing_length) + rnorm(50, 0, 1))
 avg_scale_size <- round((0.04*wing_length^2 + 20) + rnorm(N, mean = 0, sd = 0.1 * mean(wing_length)),2)
 
 # Antenna length is a function of the log of wing length.
-antenna_length <- round((3.2*log(wing_length) - 8)+ rnorm(N, log(wing_length), 0.02*log(wing_length)),2)
+antenna_length <- round((3.2*log(wing_length) - 8)+ rnorm(N, log(wing_length), 0.04*log(wing_length)),2)
 
 # Num spots is a hyperbolic function of wing width.
 num_spots <- floor(50/wing_width)
