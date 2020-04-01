@@ -1,0 +1,132 @@
+---
+title: "Classification of Hoops' Longwing Populations"
+author: "Zane Billings"
+date: "4/1/2020"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Introduction
+
+As part of the analysis of the Hoops' Longwing (*Heliconius hoopsus*) study data from my research project in Indonesia, one of the goals was to build a model to predict which subpopulation an individual butterfly is from.
+
+Here, we will use the `caret` package in order to build a $k$-Nearest Neighbors (or kNN for short) model to predict where the butterflies are from.
+
+# Building the Model
+
+First things first: let's load in the data and get the `caret` package loaded. Note that loading `caret` automatically loads some useful packages: notably, `data.table`, `ggplot2`, and `dplyr`.
+
+Remember, we want to remove the first column of this particular csv file because it is not useful for us, and we also want to set the last column to be a `character` type vector, because we know it is not a true factor, but a string instead.
+
+```{r prep, message = FALSE, warning = FALSE}
+library(caret)
+
+hoops <- read.csv("hoops_longwing_study.csv")
+hoops <- hoops[ ,-1]
+hoops$sample_id <- as.character(hoops$sample_id)
+```
+
+We might already have an idea of what the Hoops' longwing data looks like from our previous exploration, but let's look at the structure just to make sure everything has imported correctly.
+
+```{r structure}
+str(hoops)
+```
+
+With the changes we've made, everything looks fine. Now we need to get our data ready for the model.
+
+Basically, the way kNN works (I bet you have been eagerly waiting for me to actually explain this) is that we, the experimenters, choose a value, $k$, and a data point is assigned to a category by looking at the $k$ number of neighboring points which have a Euclidean distance closest to it. (Remember the Euclidean distance is just the regular distance "as the crow flies" in real life, but it can be generalized to *n*-dimensions.)
+
+So, we consider the set of $k$ points with the lowest Euclidean distances to the point we want to assign to a category, and we ask all of those points "which category are you in", and we assign our new point to the plurality answer.
+
+However, `caret` is so sleek and high-tech that it will even handle choosing the right value of $k$ for us. All we have to do is specify some parameters.
+
+Now, let's make some changes to the dataset that will help us during the modeling process.
+
+So, we only want numeric data, and we'll exclude the latitude and longitude, because we don't want to use the geographic location where the butterfly was collected as our only way to predict what population the butterfly is from.
+
+Then, we'll *normalize* the data, which can help to improve kNN accuracy (see Lantz, Machine Learning With R). Let's look at a summary of our data.
+
+```{r Summary}
+hoops_mod <- subset(hoops, select = -c(latitude, longitude, sample_id))
+summary(hoops_mod)
+```
+
+We can see that all of our numeric variables are measured on different scales, which can lead to weird notions of distance between points. So, we'll set all of our data to a common scale of measure (this is call normalization). There are two major normalization methods to think about. 
+
+We could use *min-max* normalization:
+\[X* = \frac{X - \mathrm{min}(X)}{\mathrm{max}(X) - \mathrm{min}(X)},\]
+or we could use *Z-score* normalization:
+\[X* = \frac{X - \bar{X}}{s_X}.\]
+
+Min-max is more traditional for kNN, and works well if we are not concerned about cpredicting values outside the range of the values we currently have. On the other hand, *z*-score normalization works well if we think our sample is representative of the population. For now, we'll go with the min-max method, but feel free to see if using the *z*-score method gives you a different model.
+
+```{r normalization functions}
+normalize <- function(x) {
+  xstar <- (x - min(x)) / (max(x) - min(x))
+  return(xstar)
+}
+
+normalize_df <- function(cols) {
+  nlist <- lapply(cols, normalize)
+  return(as.data.frame(nlist))
+}
+```
+
+We'll use these functions to normalize the data. However, note that we do NOT want to normalize our categorical response variable, `population`. So, this will require a little bit of finagling, but it isn't too bad.
+
+```{r normalize data}
+hoops_temp <- normalize_df(subset(hoops_mod, select = -population))
+hoops_norm <- cbind("population" = hoops_mod$population,
+                    hoops_temp)
+summary(hoops_norm)
+```
+
+Now, we'll split our data into training and testing datasets. We'll also set a random seed to make our experiment reproducible. The function `caret::createDataPartition()` is an easy way to split up the data by random sampling.
+
+```{r partition}
+set.seed(340)
+
+training_indices <- createDataPartition(y = hoops_mod$population,
+                                        p = 0.7,
+                                        list = FALSE)
+hoops_train <- hoops_mod[training_indices, ]
+hoops_test <- hoops_mod[-training_indices, ]
+```
+
+The interested reader will note that if we examine `table(hoops$population)`, we have a class imbalance issue. Good job on spotting that! But I am going to ignore it for now. Something to think about in your spare time would be ways to remedy this issue.
+
+Now we'll train the kNN model. There are some specifics for `caret` here that you can read about if you'd like, but basically you just need to know that `trainControl()` provides some important parameters for how the modeling process works in `caret`, and the function `train(method = "knn")` is what's actually fitting the model for us.
+
+```{r training model}
+set.seed(340)
+parms <- trainControl(method = "repeatedcv", 
+                      number = 10, 
+                      repeats = 3)
+knn_fit <- train(population ~., 
+                 data = hoops_train, 
+                 method = "knn",
+                 trControl = parms,
+                 preProcess = c("center", "scale"),
+                 tuneLength = 10)
+knn_fit
+```
+
+Well, we see that our optimal kNN model is $k = 7$ which gives us an accuray of about 90%. That isn't terrible, but it could probably be better if we messed around a little more. Now let's look at our predictions with the testing data.
+
+```{r testing}
+test <- predict(knn_fit, newdata = hoops_test)
+confusionMatrix(test, hoops_test$population)
+```
+
+Looking at this data, we can see wthat we are misclassifying almost all of the Kayoa butterflies. This is likely due to the issue with class imbalance where the number of Kayoa butterflies in the testing data is much lower than the number of Tidore and Ternate butterflies.
+
+# Conclusions
+
+My guess is that we either need to deal with the class imbalance problem. Maybe z-score normalization would change the results also, but I am skeptical about that. Perhaps another algorithm would be a better classifier as well.
+
+# References
+* *Machine Learning with R*, 2nd edition, by Brett Lantz. (This book describes how to implement kNN with the `class` package.)
+* [This website](https://dataaspirant.com/2017/01/09/knn-implementation-r-using-caret-package/). 
